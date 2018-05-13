@@ -40,13 +40,13 @@ case opcion
   when 2
     system "clear"
     a.each do |s|
-      puts s.split(',')[0]
-      s.split(',')[1..5].select { |a| puts "1 inasistencia" if a=='A' }
+      puts s.split(', ')[0]
+      s.split(', ')[1..5].select { |a| puts '1 inasistencia' if a=='A' }
     end
   when 3
       a.each do |s|
-        if promedio(s.split(', ')[1..5]) > 5
-          puts "El alumno: #{s.split(',')[0]} aprobó"
+        if promedio(s.split(', ')[1..5]) >= 5
+          puts "El(la) alumno(a): #{s.split(',')[0]} aprobó"
         end
       end
   when 4
