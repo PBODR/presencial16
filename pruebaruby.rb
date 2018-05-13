@@ -1,7 +1,6 @@
-file = File.open('notas_alumnos.csv','r')
+file = File.open('notas_alumnos.csv', 'r')
 datacurso = file.readlines
 file.close
-
 
 def menu
   puts 'Que deseas hacer'
@@ -10,51 +9,46 @@ def menu
   puts 'Ingresa 3 para ver alumnos aprobados'
   puts 'Ingresa 4 para salir'
 end
-
-def notasprocesadas(nombre, nota1, nota2, nota3, nota4, nota5)
-  puts nombre
-  puts nota1
+#metodo promedio de notas
+def promedio(notas)
+  suma = 0
+  notas.each do |nota|
+    suma += nota.to_f
+  end
+  suma / notas.count
 end
 
+a = datacurso.each(&:chomp)
 menu
-opcion = 1
-#opcion = gets.chomp.to_i
-
-#validacion(opcion)
-while (opcion<1 || opcion>4)
-  puts 'La opción no es válida'
+opcion = gets.chomp.to_i
+#validacion de entrada
+while (opcion < 1 || opcion > 4)
+  puts 'La opción no es válida:'
   menu
   opcion = gets.chomp.to_i
 end
-
-puts "esta es la data #{datacurso} fin"
-
- datacurso.each do |data_alumno|
-   data_alumno.split("\n")
-   print data_alumno
- end
-
-
-
-#   print slice
-# #
-# end
-
-# case(opcion)
-#
-#   when '1'
-#     puts "#{opcion} la opcion"
-#     puts data_curso
-# end
-#     # file_promedio = File.new('promedio.txt', 'w')
-#     # puts 'Se creo el archivo de promedios'
-#
-#   when '2'
-#     puts 'op2'
-#
-#   when '3'
-#     puts 'op3'
-#
-#   when '4'
-#     puts 'op4'
-# end
+#opciones
+case opcion
+  when 1
+    archivo = File.open('promedio.txt', 'w+')
+    a.each do |s|
+      archivo.puts s.split(', ')[0]
+      archivo.puts promedio(s.split(', ')[1..5])
+    end
+    file.close
+    puts 'Se ha creado el archivo promedio.txt con los promedios de los alumnos'
+  when 2
+    system "clear"
+    a.each do |s|
+      puts s.split(',')[0]
+      s.split(',')[1..5].select { |a| puts "1 inasistencia" if a=='A' }
+    end
+  when 3
+      a.each do |s|
+        if promedio(s.split(', ')[1..5]) > 5
+          puts "El alumno: #{s.split(',')[0]} aprobó"
+        end
+      end
+  when 4
+    puts 'No hay más consultas'
+end
